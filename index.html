@@ -1,487 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity Portfolio - Detailed Projects</title>
     <style>
-        :root {
-            --primary: #00ff00;
-            --secondary: #1a1a1a;
-            --text-light: #ffffff;
-            --text-dark: #333333;
-            --accent: #32cd32;
-            --bg-dark: #0a0a0a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        .wrapper {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+        }
+        
+        .diagram-section {
+            margin-bottom: 40px;
+        }
+        
+        .diagram-title {
+            color: #00ff00;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        header {
-            background-color: var(--secondary);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        nav {
+        .network-diagram {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .nav-ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
+        .network-segment {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
-        .nav-ul a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-ul a:hover {
-            color: var(--primary);
-        }
-
-        .project-section {
-            padding: 4rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .project-header {
+        .segment-title {
+            color: #00ff00;
+            font-size: 18px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 10px;
         }
 
-        .project-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
+        .segment-content {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        .project-title {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+        .component {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 15px;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .project-subtitle {
-            color: var(--accent);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+        .component-title {
+            color: #00ff00;
+            font-weight: bold;
         }
 
-        .project-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+        .component-details {
+            font-size: 14px;
+            color: #ccc;
         }
 
-        @media (max-width: 768px) {
-            .project-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .project-description {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 10px;
-        }
-
-        .project-media {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 10px;
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid rgba(0, 255, 0, 0.2);
+            margin: 10px auto;
         }
 
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 8px;
+            margin-top: 10px;
         }
 
-        .tech-tag {
-            background: var(--primary);
-            color: var(--text-dark);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
+        .tech-badge {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            color: #00ff00;
         }
 
-        .project-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
+        .network-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            text-align: center;
         }
 
-        .gallery-item {
-            position: relative;
-            padding-top: 75%; /* 4:3 Aspect Ratio */
-            background: var(--secondary);
+        .stat-item {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 8px;
-            overflow: hidden;
+            padding: 20px;
+            min-width: 200px;
         }
 
-        .gallery-item img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .stat-value {
+            color: #00ff00;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        .key-features {
-            margin-top: 2rem;
-        }
-
-        .key-features h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .features-list {
-            list-style: none;
-        }
-
-        .features-list li {
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .features-list li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-        }
-
-        .methodology {
-            margin-top: 2rem;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .methodology h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .results {
-            margin-top: 2rem;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .results h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
+        .stat-label {
+            color: #ccc;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="wrapper">
-            <h1><a href="#" style="color: var(--primary); text-decoration: none;">Security Portfolio</a></h1>
-            <ul class="nav-ul">
-                <li><a href="#monitoring">Monitoring Lab</a></li>
-                <li><a href="#malware">Malware Detection</a></li>
-                <li><a href="#scanner">Security Scanner</a></li>
-                <li><a href="#yara">YARA Lab</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="wrapper">
-        <section id="monitoring" class="project-section">
-            <div class="project-header">
-                <div class="project-icon">🔍</div>
-                <div>
-                    <h2 class="project-title">Cybersecurity Detection & Monitoring Lab</h2>
-                    <p class="project-subtitle">Enterprise Network Simulation & Threat Detection</p>
-                </div>
-            </div>
-
-            <div class="project-content">
-                <div class="project-description">
-                    <h3>Project Overview</h3>
-                    <p>Designed and implemented a comprehensive virtualized homelab environment that simulates an enterprise network infrastructure. This lab provides a safe, controlled environment for security testing, threat detection, and incident response practice.</p>
-                    
-                    <div class="tech-stack">
-                        <span class="tech-tag">pfSense</span>
-                        <span class="tech-tag">Security Onion</span>
-                        <span class="tech-tag">Splunk</span>
-                        <span class="tech-tag">Kali Linux</span>
-                        <span class="tech-tag">Windows Server</span>
-                        <span class="tech-tag">Active Directory</span>
-                        <span class="tech-tag">VMware</span>
+    <div class="container">
+        <div class="diagram-section">
+            <h2 class="diagram-title">Enterprise-Grade Security Operations Center Lab</h2>
+            
+            <div class="network-diagram">
+                <!-- Management Network -->
+                <div class="network-segment">
+                    <div class="segment-title">
+                        <span>🛡️ Management Network (192.168.1.0/24)</span>
                     </div>
-
-                    <div class="key-features">
-                        <h3>Infrastructure Components</h3>
-                        <ul class="features-list">
-                            <li>Host System: AMD Ryzen 5 3600X, 32GB RAM, 1TB NVMe SSD</li>
-                            <li>VMware Workstation Pro as the hypervisor platform</li>
-                            <li>pfSense firewall with advanced network segmentation</li>
-                            <li>Security Onion for IDS and security monitoring</li>
-                            <li>Dedicated analysis workstation for SOC simulation</li>
-                            <li>Active Directory environment with Windows Server 2019</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-media">
-                    <h3>Network Architecture & Data Flow</h3>
-                    <div style="margin-bottom: 2rem;">
-                        <h4>Network Topology</h4>
-                        <p>Complete network segmentation showing all components and their connectivity:</p>
-                        <div style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600">
-                                <!-- Background -->
-                                <rect width="1000" height="600" fill="#1a1a1a"/>
-                                
-                                <!-- Grid lines -->
-                                <path d="M0 100 H1000 M0 200 H1000 M0 300 H1000 M0 400 H1000 M0 500 H1000" 
-                                      stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
-                                
-                                <!-- Network Segments -->
-                                <!-- Management Network -->
-                                <rect x="50" y="50" width="900" height="100" rx="10" fill="#2d4059" opacity="0.3"/>
-                                <text x="60" y="80" fill="#00ff00" font-family="monospace" font-size="14">Management Network (VMnet2) - 192.168.1.0/24</text>
-                                
-                                <!-- Attack Network -->
-                                <rect x="50" y="170" width="900" height="100" rx="10" fill="#ea5455" opacity="0.3"/>
-                                <text x="60" y="200" fill="#00ff00" font-family="monospace" font-size="14">Attack Network (VMnet3) - 192.168.2.0/24</text>
-                                
-                                <!-- Victim Network -->
-                                <rect x="50" y="290" width="900" height="100" rx="10" fill="#f07b3f" opacity="0.3"/>
-                                <text x="60" y="320" fill="#00ff00" font-family="monospace" font-size="14">Victim Network (VMnet4) - 192.168.3.0/24</text>
-                                
-                                <!-- Monitoring Network -->
-                                <rect x="50" y="410" width="900" height="100" rx="10" fill="#2d4059" opacity="0.3"/>
-                                <text x="60" y="440" fill="#00ff00" font-family="monospace" font-size="14">Monitoring Network (VMnet5) - 192.168.4.0/24</text>
-                                
-                                <!-- Devices -->
-                                <!-- pfSense -->
-                                <circle cx="200" cy="300" r="30" fill="#4a90e2"/>
-                                <text x="200" y="305" fill="white" font-family="monospace" font-size="12" text-anchor="middle">pfSense</text>
-                                
-                                <!-- Kali -->
-                                <rect x="350" y="190" width="100" height="60" rx="5" fill="#c0392b"/>
-                                <text x="400" y="225" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Kali Linux</text>
-                                
-                                <!-- Domain Controller -->
-                                <rect x="500" y="310" width="120" height="60" rx="5" fill="#27ae60"/>
-                                <text x="560" y="345" fill="white" font-family="monospace" font-size="12" text-anchor="middle">DC</text>
-                                
-                                <!-- Windows 10 Clients -->
-                                <rect x="700" y="310" width="100" height="60" rx="5" fill="#8e44ad"/>
-                                <text x="750" y="345" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Win10 Clients</text>
-                                
-                                <!-- Security Onion -->
-                                <rect x="350" y="430" width="120" height="60" rx="5" fill="#f1c40f"/>
-                                <text x="410" y="465" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Security Onion</text>
-                                
-                                <!-- Splunk -->
-                                <rect x="500" y="430" width="100" height="60" rx="5" fill="#e67e22"/>
-                                <text x="550" y="465" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Splunk</text>
-                                
-                                <!-- Connections -->
-                                <path d="M200 270 L350 220" stroke="#00ff00" stroke-width="2"/>
-                                <path d="M200 330 L500 340" stroke="#00ff00" stroke-width="2"/>
-                                <path d="M620 340 L700 340" stroke="#00ff00" stroke-width="2"/>
-                                <path d="M200 330 L350 460" stroke="#00ff00" stroke-width="2"/>
-                                <path d="M200 330 L500 460" stroke="#00ff00" stroke-width="2"/>
-                                
-                                <!-- Legend -->
-                                <rect x="50" y="530" width="900" height="50" rx="5" fill="#333"/>
-                                <text x="60" y="560" fill="#00ff00" font-family="monospace" font-size="12">
-                                    Legend: ● pfSense Firewall | ■ Attack Machine | ■ Domain Controller | ■ Workstations | ■ Security Monitoring | ■ SIEM
-                                </text>
-                            </svg>
+                    <div class="segment-content">
+                        <div class="component">
+                            <div class="component-title">pfSense Firewall</div>
+                            <div class="component-details">
+                                - Network Segmentation
+                                - Traffic Control
+                                - Security Policies
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-badge">VLAN</span>
+                                <span class="tech-badge">NAT</span>
+                                <span class="tech-badge">Firewall Rules</span>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div>
-                        <h4>Security Monitoring Data Flow</h4>
-                        <p>Detailed view of log collection, monitoring, and analysis architecture:</p>
-                        <div style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600">
-                                <!-- Background -->
-                                <rect width="1000" height="600" fill="#1a1a1a"/>
-                                
-                                <!-- Main Components -->
-                                <!-- Windows Domain -->
-                                <rect x="50" y="50" width="300" height="200" rx="10" fill="#2d4059" opacity="0.3"/>
-                                <text x="70" y="80" fill="#00ff00" font-family="monospace" font-size="14">Windows Domain Environment</text>
-                                
-                                <!-- Domain Controller -->
-                                <rect x="70" y="100" width="120" height="60" rx="5" fill="#27ae60"/>
-                                <text x="130" y="135" fill="white" font-family="monospace" font-size="12" text-anchor="middle">DC</text>
-                                
-                                <!-- Win10 Clients -->
-                                <rect x="210" y="100" width="120" height="60" rx="5" fill="#8e44ad"/>
-                                <text x="270" y="135" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Clients</text>
-                                
-                                <!-- Universal Forwarders -->
-                                <rect x="70" y="170" width="260" height="40" rx="5" fill="#e67e22"/>
-                                <text x="200" y="195" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Splunk Universal Forwarders</text>
-                                
-                                <!-- Security Monitoring -->
-                                <rect x="400" y="50" width="550" height="200" rx="10" fill="#2d4059" opacity="0.3"/>
-                                <text x="420" y="80" fill="#00ff00" font-family="monospace" font-size="14">Security Monitoring Infrastructure</text>
-                                
-                                <!-- Security Onion -->
-                                <rect x="420" y="100" width="200" height="120" rx="5" fill="#f1c40f"/>
-                                <text x="520" y="130" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Security Onion</text>
-                                <text x="520" y="150" fill="white" font-family="monospace" font-size="10" text-anchor="middle">- Suricata IDS</text>
-                                <text x="520" y="170" fill="white" font-family="monospace" font-size="10" text-anchor="middle">- Zeek Network Monitor</text>
-                                <text x="520" y="190" fill="white" font-family="monospace" font-size="10" text-anchor="middle">- Full Packet Capture</text>
-                                
-                                <!-- Splunk -->
-                                <rect x="670" y="100" width="200" height="120" rx="5" fill="#e67e22"/>
-                                <text x="770" y="130" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Splunk SIEM</text>
-                                <text x="770" y="150" fill="white" font-family="monospace" font-size="10" text-anchor="middle">- Event Correlation</text>
-                                <text x="770" y="170" fill="white" font-family="monospace" font-size="10" text-anchor="middle">- Alert Generation</text>
-                                <text x="770" y="190" fill="white" font-family="monospace" font-size="10" text-anchor="middle">- Log Analysis</text>
-                                
-                                <!-- Attack Infrastructure -->
-                                <rect x="50" y="300" width="300" height="150" rx="10" fill="#2d4059" opacity="0.3"/>
-                                <text x="70" y="330" fill="#00ff00" font-family="monospace" font-size="14">Attack Infrastructure</text>
-                                
-                                <!-- Kali Linux -->
-                                <rect x="70" y="350" width="260" height="80" rx="5" fill="#c0392b"/>
-                                <text x="200" y="380" fill="white" font-family="monospace" font-size="12" text-anchor="middle">Kali Linux</text>
-                                <text x="200" y="400" fill="white" font-family="monospace" font-size="10" text-anchor="middle">Penetration Testing Tools</text>
-                                
-                                <!-- Data Flow Arrows -->
-                                <defs>
-                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                        <polygon points="0 0, 10 3.5, 0 7" fill="#00ff00"/>
-                                    </marker>
-                                </defs>
-                                
-                                <!-- Log Flow -->
-                                <path d="M330 190 L670 160" stroke="#00ff00" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <text x="500" y="160" fill="#00ff00" font-family="monospace" font-size="10">Windows Events</text>
-                                
-                                <!-- Network Traffic -->
-                                <path d="M200 250 L420 160" stroke="#00ff00" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <text x="300" y="220" fill="#00ff00" font-family="monospace" font-size="10">Network Traffic</text>
-                                
-                                <!-- Attack Traffic -->
-                                <path d="M200 350 L200 250" stroke="#ff0000" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
-                                <text x="220" y="300" fill="#ff0000" font-family="monospace" font-size="10">Attack Traffic</text>
-                                
-                                <!-- Legend -->
-                                <rect x="400" y="300" width="550" height="150" rx="10" fill="#2d4059" opacity="0.3"/>
-                                <text x="420" y="330" fill="#00ff00" font-family="monospace" font-size="14">Data Flow Legend</text>
-                                
-                                <line x1="420" y1="350" x2="520" y2="350" stroke="#00ff00" stroke-width="2"/>
-                                <text x="530" y="355" fill="#00ff00" font-family="monospace" font-size="12">Log Data Flow</text>
-                                
-                                <line x1="420" y1="380" x2="520" y2="380" stroke="#00ff00" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <text x="530" y="385" fill="#00ff00" font-family="monospace" font-size="12">Network Traffic</text>
-                                
-                                <line x1="420" y1="410" x2="520" y2="410" stroke="#ff0000" stroke-width="2" stroke-dasharray="5,5"/>
-                                <text x="530" y="415" fill="#ff0000" font-family="monospace" font-size="12">Attack Traffic</text>
-                            </svg>
+                </div>
+
+                <div class="arrow-down"></div>
+
+                <!-- Security Monitoring -->
+                <div class="network-segment">
+                    <div class="segment-title">
+                        <span>🔍 Security Monitoring Infrastructure (192.168.4.0/24)</span>
+                    </div>
+                    <div class="segment-content">
+                        <div class="component">
+                            <div class="component-title">Security Onion</div>
+                            <div class="component-details">
+                                - IDS/IPS
+                                - Network Monitoring
+                                - Threat Detection
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-badge">Suricata</span>
+                                <span class="tech-badge">Zeek</span>
+                                <span class="tech-badge">Wazuh</span>
+                            </div>
+                        </div>
+                        <div class="component">
+                            <div class="component-title">Splunk SIEM</div>
+                            <div class="component-details">
+                                - Log Aggregation
+                                - Event Correlation
+                                - Threat Hunting
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-badge">Universal Forwarder</span>
+                                <span class="tech-badge">SPL</span>
+                                <span class="tech-badge">Dashboards</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow-down"></div>
+
+                <!-- Enterprise Environment -->
+                <div class="network-segment">
+                    <div class="segment-title">
+                        <span>🏢 Enterprise Environment (192.168.2.0/24)</span>
+                    </div>
+                    <div class="segment-content">
+                        <div class="component">
+                            <div class="component-title">Domain Controller</div>
+                            <div class="component-details">
+                                - Active Directory
+                                - Group Policy
+                                - DNS Services
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-badge">Windows Server 2019</span>
+                                <span class="tech-badge">AD DS</span>
+                                <span class="tech-badge">PKI</span>
+                            </div>
+                        </div>
+                        <div class="component">
+                            <div class="component-title">Client Workstations</div>
+                            <div class="component-details">
+                                - Domain-Joined
+                                - Monitored Endpoints
+                                - Security Policies
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-badge">Windows 10</span>
+                                <span class="tech-badge">Event Logging</span>
+                                <span class="tech-badge">GPO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testing Environment -->
+                <div class="arrow-down"></div>
+
+                <div class="network-segment">
+                    <div class="segment-title">
+                        <span>🎯 Security Testing Environment (192.168.3.0/24)</span>
+                    </div>
+                    <div class="segment-content">
+                        <div class="component">
+                            <div class="component-title">Kali Linux</div>
+                            <div class="component-details">
+                                - Penetration Testing
+                                - Vulnerability Assessment
+                                - Security Research
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-badge">Metasploit</span>
+                                <span class="tech-badge">Nmap</span>
+                                <span class="tech-badge">Wireshark</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="methodology">
-                <h3>Implementation Details</h3>
-                <h4>Network Segmentation</h4>
-                <p>Implemented sophisticated network segregation using pfSense:</p>
-                <ul>
-                    <li>Dedicated management interface for administrative access</li>
-                    <li>Separate network segments for attack testing (Kali Linux)</li>
-                    <li>Isolated victim network for Windows domain environment</li>
-                    <li>SPAN port configuration for Security Onion monitoring</li>
-                    <li>Custom firewall rules for controlled access between segments</li>
-                </ul>
-
-                <h4>Security Monitoring Configuration</h4>
-                <ul>
-                    <li>Security Onion deployment with full packet capture and IDS capabilities</li>
-                    <li>Splunk SIEM implementation with Universal Forwarders on Windows hosts</li>
-                    <li>Custom Windows event log collection and correlation</li>
-                    <li>Automated alert generation for suspicious activities</li>
-                </ul>
-
-                <h4>Active Directory Integration</h4>
-                <ul>
-                    <li>Windows Server 2019 configured as domain controller</li>
-                    <li>Certificate services implementation for PKI infrastructure</li>
-                    <li>Multiple domain-joined Windows 10 workstations</li>
-                    <li>Comprehensive group policy management</li>
-                </ul>
+            <div class="network-stats">
+                <div class="stat-item">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Network Segments</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">Security Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Monitoring</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Segmentation</div>
+                </div>
             </div>
-
-            <div class="results">
-                <h3>Capabilities & Learning Outcomes</h3>
-                <p>This lab environment enables:</p>
-                <ul>
-                    <li>Real-time threat detection and incident response simulation</li>
-                    <li>Network traffic analysis and anomaly detection</li>
-                    <li>Security tool deployment and configuration practice</li>
-                    <li>Advanced logging and monitoring system implementation</li>
-                    <li>Enterprise security architecture understanding</li>
-                </ul>
-
-                <h4>Key Achievements</h4>
-                <ul>
-                    <li>Successfully configured multi-segment network with proper security controls</li>
-                    <li>Implemented comprehensive logging and monitoring solution</li>
-                    <li>Created realistic environment for security testing and learning</li>
-                    <li>Developed hands-on experience with enterprise security tools</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Similar detailed sections for other projects... -->
-        <section id="malware" class="project-section">
-            <!-- Malware Detection Engine Lab content -->
-        </section>
-
-        <section id="scanner" class="project-section">
-            <!-- Advanced Security Scanner Lab content -->
-        </section>
-
-        <section id="yara" class="project-section">
-            <!-- Threat Detection with YARA Lab content -->
-        </section>
-    </main>
+        </div>
+    </div>
 </body>
 </html>
