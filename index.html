@@ -2,272 +2,352 @@
 <html>
 <head>
     <style>
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            font-family: 'Segoe UI', Arial, sans-serif;
+        .pentest-container {
             background: #0a0a0a;
-            color: #fff;
-        }
-        
-        .diagram-section {
-            margin-bottom: 40px;
-        }
-        
-        .diagram-title {
-            color: #00ff00;
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
+            color: #ffffff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 2rem;
         }
 
-        .network-diagram {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .section-header {
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .network-segment {
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
             background: rgba(0, 255, 0, 0.05);
             border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .segment-title {
-            color: #00ff00;
-            font-size: 18px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .segment-content {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .component {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            padding: 15px;
-            min-width: 200px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .component-title {
-            color: #00ff00;
-            font-weight: bold;
-        }
-
-        .component-details {
-            font-size: 14px;
-            color: #ccc;
-        }
-
-        .arrow-down {
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 20px solid rgba(0, 255, 0, 0.2);
-            margin: 10px auto;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .tech-badge {
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            border-radius: 4px;
-            padding: 4px 8px;
-            font-size: 12px;
-            color: #00ff00;
-        }
-
-        .network-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
+            padding: 1.5rem;
             text-align: center;
-        }
-
-        .stat-item {
-            background: rgba(0, 255, 0, 0.05);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 8px;
-            padding: 20px;
-            min-width: 200px;
         }
 
         .stat-value {
+            font-size: 2rem;
             color: #00ff00;
-            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
             color: #ccc;
-            font-size: 14px;
+            font-size: 0.9rem;
+        }
+
+        .box-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .box-card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .box-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .box-title {
+            color: #00ff00;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .difficulty {
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .easy { background: #4CAF50; }
+        .medium { background: #FFC107; }
+        .hard { background: #F44336; }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .methodology-section {
+            margin: 2rem 0;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .methodology-card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .methodology-title {
+            color: #00ff00;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tools-section {
+            margin: 2rem 0;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .tool-card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-section {
+            margin: 2rem 0;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            height: 20px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #00ff00;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .certifications {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .cert-badge {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            min-width: 150px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="diagram-section">
-            <h2 class="diagram-title">Enterprise-Grade Security Operations Center Lab</h2>
+    <div class="pentest-container">
+        <div class="section-header">
+            <h1>Penetration Testing Portfolio</h1>
+            <p>Specialized in network penetration testing, web application security, and system exploitation</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">25+</div>
+                <div class="stat-label">TryHackMe Boxes Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">15+</div>
+                <div class="stat-label">Unique Vulnerabilities Found</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">10+</div>
+                <div class="stat-label">Custom Exploits Developed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">5+</div>
+                <div class="stat-label">CTF Competitions</div>
+            </div>
+        </div>
+
+        <!-- Featured TryHackMe Boxes -->
+        <h2>Featured TryHackMe Boxes</h2>
+        <div class="box-grid">
+            <div class="box-card">
+                <div class="box-header">
+                    <span class="box-title">RootMe</span>
+                    <span class="difficulty easy">Easy</span>
+                </div>
+                <p>A classic box focusing on basic web application vulnerabilities and privilege escalation.</p>
+                <div class="tag-container">
+                    <span class="tag">Web Exploitation</span>
+                    <span class="tag">File Upload</span>
+                    <span class="tag">SUID</span>
+                </div>
+            </div>
             
-            <div class="network-diagram">
-                <!-- Management Network -->
-                <div class="network-segment">
-                    <div class="segment-title">
-                        <span>🛡️ Management Network (192.168.1.0/24)</span>
-                    </div>
-                    <div class="segment-content">
-                        <div class="component">
-                            <div class="component-title">pfSense Firewall</div>
-                            <div class="component-details">
-                                - Network Segmentation
-                                - Traffic Control
-                                - Security Policies
-                            </div>
-                            <div class="tech-stack">
-                                <span class="tech-badge">VLAN</span>
-                                <span class="tech-badge">NAT</span>
-                                <span class="tech-badge">Firewall Rules</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="box-card">
+                <div class="box-header">
+                    <span class="box-title">Blue</span>
+                    <span class="difficulty medium">Medium</span>
                 </div>
-
-                <div class="arrow-down"></div>
-
-                <!-- Security Monitoring -->
-                <div class="network-segment">
-                    <div class="segment-title">
-                        <span>🔍 Security Monitoring Infrastructure (192.168.4.0/24)</span>
-                    </div>
-                    <div class="segment-content">
-                        <div class="component">
-                            <div class="component-title">Security Onion</div>
-                            <div class="component-details">
-                                - IDS/IPS
-                                - Network Monitoring
-                                - Threat Detection
-                            </div>
-                            <div class="tech-stack">
-                                <span class="tech-badge">Suricata</span>
-                                <span class="tech-badge">Zeek</span>
-                                <span class="tech-badge">Wazuh</span>
-                            </div>
-                        </div>
-                        <div class="component">
-                            <div class="component-title">Splunk SIEM</div>
-                            <div class="component-details">
-                                - Log Aggregation
-                                - Event Correlation
-                                - Threat Hunting
-                            </div>
-                            <div class="tech-stack">
-                                <span class="tech-badge">Universal Forwarder</span>
-                                <span class="tech-badge">SPL</span>
-                                <span class="tech-badge">Dashboards</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="arrow-down"></div>
-
-                <!-- Enterprise Environment -->
-                <div class="network-segment">
-                    <div class="segment-title">
-                        <span>🏢 Enterprise Environment (192.168.2.0/24)</span>
-                    </div>
-                    <div class="segment-content">
-                        <div class="component">
-                            <div class="component-title">Domain Controller</div>
-                            <div class="component-details">
-                                - Active Directory
-                                - Group Policy
-                                - DNS Services
-                            </div>
-                            <div class="tech-stack">
-                                <span class="tech-badge">Windows Server 2019</span>
-                                <span class="tech-badge">AD DS</span>
-                                <span class="tech-badge">PKI</span>
-                            </div>
-                        </div>
-                        <div class="component">
-                            <div class="component-title">Client Workstations</div>
-                            <div class="component-details">
-                                - Domain-Joined
-                                - Monitored Endpoints
-                                - Security Policies
-                            </div>
-                            <div class="tech-stack">
-                                <span class="tech-badge">Windows 10</span>
-                                <span class="tech-badge">Event Logging</span>
-                                <span class="tech-badge">GPO</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testing Environment -->
-                <div class="arrow-down"></div>
-
-                <div class="network-segment">
-                    <div class="segment-title">
-                        <span>🎯 Security Testing Environment (192.168.3.0/24)</span>
-                    </div>
-                    <div class="segment-content">
-                        <div class="component">
-                            <div class="component-title">Kali Linux</div>
-                            <div class="component-details">
-                                - Penetration Testing
-                                - Vulnerability Assessment
-                                - Security Research
-                            </div>
-                            <div class="tech-stack">
-                                <span class="tech-badge">Metasploit</span>
-                                <span class="tech-badge">Nmap</span>
-                                <span class="tech-badge">Wireshark</span>
-                            </div>
-                        </div>
-                    </div>
+                <p>Windows machine exploiting the EternalBlue vulnerability (MS17-010).</p>
+                <div class="tag-container">
+                    <span class="tag">Windows</span>
+                    <span class="tag">EternalBlue</span>
+                    <span class="tag">Metasploit</span>
                 </div>
             </div>
 
-            <div class="network-stats">
-                <div class="stat-item">
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">Network Segments</div>
+            <div class="box-card">
+                <div class="box-header">
+                    <span class="box-title">Steel Mountain</span>
+                    <span class="difficulty hard">Hard</span>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">10+</div>
-                    <div class="stat-label">Security Tools</div>
+                <p>Advanced Windows exploitation involving service vulnerabilities and PowerShell.</p>
+                <div class="tag-container">
+                    <span class="tag">Windows</span>
+                    <span class="tag">Service Exploit</span>
+                    <span class="tag">PowerShell</span>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">Monitoring</div>
+            </div>
+        </div>
+
+        <!-- Methodology Section -->
+        <div class="methodology-section">
+            <h2>Penetration Testing Methodology</h2>
+            <div class="methodology-grid">
+                <div class="methodology-card">
+                    <div class="methodology-title">Reconnaissance</div>
+                    <ul>
+                        <li>Network Mapping</li>
+                        <li>Service Enumeration</li>
+                        <li>OSINT Gathering</li>
+                        <li>Vulnerability Scanning</li>
+                    </ul>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">100%</div>
-                    <div class="stat-label">Segmentation</div>
+                <div class="methodology-card">
+                    <div class="methodology-title">Exploitation</div>
+                    <ul>
+                        <li>Web Application Attacks</li>
+                        <li>Network Service Exploitation</li>
+                        <li>Custom Exploit Development</li>
+                        <li>Social Engineering</li>
+                    </ul>
                 </div>
+                <div class="methodology-card">
+                    <div class="methodology-title">Post-Exploitation</div>
+                    <ul>
+                        <li>Privilege Escalation</li>
+                        <li>Lateral Movement</li>
+                        <li>Data Exfiltration</li>
+                        <li>Persistence</li>
+                    </ul>
+                </div>
+                <div class="methodology-card">
+                    <div class="methodology-title">Reporting</div>
+                    <ul>
+                        <li>Vulnerability Documentation</li>
+                        <li>Risk Assessment</li>
+                        <li>Remediation Guidance</li>
+                        <li>Executive Summaries</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Proficiency -->
+        <div class="tools-section">
+            <h2>Tools & Technologies</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🔍</div>
+                    <div>Nmap</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🛡️</div>
+                    <div>Metasploit</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🕸️</div>
+                    <div>Burp Suite</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🔨</div>
+                    <div>Wireshark</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🐍</div>
+                    <div>Python</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🔑</div>
+                    <div>Hashcat</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress & Achievements -->
+        <div class="progress-section">
+            <h2>TryHackMe Progress</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%;"></div>
+            </div>
+            <p>Top 10% on TryHackMe Global Leaderboard</p>
+        </div>
+
+        <!-- Certifications & Badges -->
+        <div class="certifications">
+            <div class="cert-badge">
+                <div>🏆</div>
+                <div>Jr Penetration Tester</div>
+                <div>TryHackMe Path</div>
+            </div>
+            <div class="cert-badge">
+                <div>🎯</div>
+                <div>Complete Beginner</div>
+                <div>TryHackMe Path</div>
+            </div>
+            <div class="cert-badge">
+                <div>⚔️</div>
+                <div>Offensive Security</div>
+                <div>TryHackMe Path</div>
             </div>
         </div>
     </div>
