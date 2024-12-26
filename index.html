@@ -1,353 +1,261 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TryHackMe Room Achievements</title>
     <style>
-        .pentest-container {
-            background: #0a0a0a;
-            color: #ffffff;
+        :root {
+            --primary: #00ff00;
+            --bg-dark: #0a0a0a;
+            --text-light: #ffffff;
+            --card-bg: rgba(0, 255, 0, 0.05);
+            --border-color: rgba(0, 255, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
         }
 
-        .section-header {
-            border-bottom: 2px solid #00ff00;
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
+        .category {
+            margin-bottom: 3rem;
         }
 
-        .stats-grid {
+        .category-header {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .rooms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: rgba(0, 255, 0, 0.05);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            color: #00ff00;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-
-        .box-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
         }
 
-        .box-card {
-            background: rgba(0, 255, 0, 0.05);
-            border: 1px solid rgba(0, 255, 0, 0.2);
+        .room-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1.5rem;
             transition: transform 0.3s ease;
         }
 
-        .box-card:hover {
+        .room-card:hover {
             transform: translateY(-5px);
         }
 
-        .box-header {
+        .room-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 1rem;
         }
 
-        .box-title {
-            color: #00ff00;
-            font-size: 1.2rem;
+        .room-title {
+            color: var(--primary);
+            font-size: 1.1rem;
             font-weight: bold;
         }
 
         .difficulty {
-            padding: 0.3rem 0.8rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .easy { background: #4CAF50; }
-        .medium { background: #FFC107; }
-        .hard { background: #F44336; }
-
-        .tag-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .tag {
-            background: rgba(255, 255, 255, 0.1);
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
             font-size: 0.8rem;
         }
 
-        .methodology-section {
-            margin: 2rem 0;
+        .easy { background: #28a745; }
+        .medium { background: #ffc107; color: #000; }
+        .hard { background: #dc3545; }
+        .info { background: #17a2b8; }
+
+        .room-description {
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #ccc;
         }
 
-        .methodology-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .methodology-card {
-            background: rgba(0, 255, 0, 0.05);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-        }
-
-        .methodology-title {
-            color: #00ff00;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .tools-section {
-            margin: 2rem 0;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-
-        .tool-card {
-            background: rgba(0, 255, 0, 0.05);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .tool-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-section {
-            margin: 2rem 0;
-        }
-
-        .progress-bar {
+        .room-type {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
-            height: 20px;
-            margin: 1rem 0;
-            overflow: hidden;
+            font-size: 0.8rem;
         }
 
-        .progress-fill {
-            background: #00ff00;
-            height: 100%;
-            transition: width 0.3s ease;
+        .write-up-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
         }
 
-        .certifications {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1rem 0;
+        .write-up-link:hover {
+            text-decoration: underline;
         }
 
-        .cert-badge {
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            min-width: 150px;
+        .status-pill {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .pending {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .completed {
+            background: #28a745;
         }
     </style>
 </head>
 <body>
-    <div class="pentest-container">
-        <div class="section-header">
-            <h1>Penetration Testing Portfolio</h1>
-            <p>Specialized in network penetration testing, web application security, and system exploitation</p>
-        </div>
+    <div class="container">
+        <!-- Fundamentals Category -->
+        <div class="category">
+            <h2 class="category-header">🎓 Fundamentals & Career Path</h2>
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">Pentesting Fundamentals</div>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="room-description">Learn the important ethics and methodologies behind every pentest.</div>
+                    <span class="room-type">Free</span>
+                    <a href="writeups/pentesting-fundamentals.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
+                </div>
 
-        <!-- Stats Overview -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value">25+</div>
-                <div class="stat-label">TryHackMe Boxes Completed</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">15+</div>
-                <div class="stat-label">Unique Vulnerabilities Found</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">10+</div>
-                <div class="stat-label">Custom Exploits Developed</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">5+</div>
-                <div class="stat-label">CTF Competitions</div>
-            </div>
-        </div>
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">Red Team Engagements</div>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="room-description">Learn the steps and procedures of a red team engagement.</div>
+                    <span class="room-type">Free</span>
+                    <a href="writeups/red-team-engagements.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
+                </div>
 
-        <!-- Featured TryHackMe Boxes -->
-        <h2>Featured TryHackMe Boxes</h2>
-        <div class="box-grid">
-            <div class="box-card">
-                <div class="box-header">
-                    <span class="box-title">RootMe</span>
-                    <span class="difficulty easy">Easy</span>
-                </div>
-                <p>A classic box focusing on basic web application vulnerabilities and privilege escalation.</p>
-                <div class="tag-container">
-                    <span class="tag">Web Exploitation</span>
-                    <span class="tag">File Upload</span>
-                    <span class="tag">SUID</span>
-                </div>
-            </div>
-            
-            <div class="box-card">
-                <div class="box-header">
-                    <span class="box-title">Blue</span>
-                    <span class="difficulty medium">Medium</span>
-                </div>
-                <p>Windows machine exploiting the EternalBlue vulnerability (MS17-010).</p>
-                <div class="tag-container">
-                    <span class="tag">Windows</span>
-                    <span class="tag">EternalBlue</span>
-                    <span class="tag">Metasploit</span>
-                </div>
-            </div>
-
-            <div class="box-card">
-                <div class="box-header">
-                    <span class="box-title">Steel Mountain</span>
-                    <span class="difficulty hard">Hard</span>
-                </div>
-                <p>Advanced Windows exploitation involving service vulnerabilities and PowerShell.</p>
-                <div class="tag-container">
-                    <span class="tag">Windows</span>
-                    <span class="tag">Service Exploit</span>
-                    <span class="tag">PowerShell</span>
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">Careers in Cyber</div>
+                        <span class="difficulty info">Info</span>
+                    </div>
+                    <div class="room-description">Learn about the different careers in cyber security.</div>
+                    <span class="room-type">Free</span>
+                    <a href="writeups/careers-in-cyber.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
                 </div>
             </div>
         </div>
 
-        <!-- Methodology Section -->
-        <div class="methodology-section">
-            <h2>Penetration Testing Methodology</h2>
-            <div class="methodology-grid">
-                <div class="methodology-card">
-                    <div class="methodology-title">Reconnaissance</div>
-                    <ul>
-                        <li>Network Mapping</li>
-                        <li>Service Enumeration</li>
-                        <li>OSINT Gathering</li>
-                        <li>Vulnerability Scanning</li>
-                    </ul>
+        <!-- Security Tools Category -->
+        <div class="category">
+            <h2 class="category-header">🛠️ Security Tools & Applications</h2>
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">Burp Suite: The Basics</div>
+                        <span class="difficulty info">Info</span>
+                    </div>
+                    <div class="room-description">An introduction to using Burp Suite for web application pentesting.</div>
+                    <span class="room-type">Premium</span>
+                    <a href="writeups/burp-suite-basics.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
                 </div>
-                <div class="methodology-card">
-                    <div class="methodology-title">Exploitation</div>
-                    <ul>
-                        <li>Web Application Attacks</li>
-                        <li>Network Service Exploitation</li>
-                        <li>Custom Exploit Development</li>
-                        <li>Social Engineering</li>
-                    </ul>
+
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">Nmap Live Host Discovery</div>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="room-description">Learn how to use Nmap to discover live hosts using ARP scan, ICMP scan, and TCP/UDP ping scan.</div>
+                    <span class="room-type">Free</span>
+                    <a href="writeups/nmap-live-host.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
                 </div>
-                <div class="methodology-card">
-                    <div class="methodology-title">Post-Exploitation</div>
-                    <ul>
-                        <li>Privilege Escalation</li>
-                        <li>Lateral Movement</li>
-                        <li>Data Exfiltration</li>
-                        <li>Persistence</li>
-                    </ul>
-                </div>
-                <div class="methodology-card">
-                    <div class="methodology-title">Reporting</div>
-                    <ul>
-                        <li>Vulnerability Documentation</li>
-                        <li>Risk Assessment</li>
-                        <li>Remediation Guidance</li>
-                        <li>Executive Summaries</li>
-                    </ul>
+
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">Hydra</div>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="room-description">Learn about and use Hydra, a fast network logon cracker, to bruteforce and obtain credentials.</div>
+                    <span class="room-type">Free</span>
+                    <a href="writeups/hydra.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
                 </div>
             </div>
         </div>
 
-        <!-- Tools Proficiency -->
-        <div class="tools-section">
-            <h2>Tools & Technologies</h2>
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🔍</div>
-                    <div>Nmap</div>
+        <!-- Web Security Category -->
+        <div class="category">
+            <h2 class="category-header">🌐 Web Security</h2>
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">IDOR</div>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="room-description">Learn how to find and exploit IDOR vulnerabilities in web applications.</div>
+                    <span class="room-type">Premium</span>
+                    <a href="writeups/idor.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
                 </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🛡️</div>
-                    <div>Metasploit</div>
+
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">SQL Injection</div>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="room-description">Learn how to detect and exploit SQL Injection vulnerabilities.</div>
+                    <span class="room-type">Free</span>
+                    <a href="writeups/sql-injection.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
                 </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🕸️</div>
-                    <div>Burp Suite</div>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🔨</div>
-                    <div>Wireshark</div>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🐍</div>
-                    <div>Python</div>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🔑</div>
-                    <div>Hashcat</div>
-                </div>
+
+                <!-- Add more web security rooms -->
             </div>
         </div>
 
-        <!-- Progress & Achievements -->
-        <div class="progress-section">
-            <h2>TryHackMe Progress</h2>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 75%;"></div>
-            </div>
-            <p>Top 10% on TryHackMe Global Leaderboard</p>
-        </div>
+        <!-- Network Security Category -->
+        <div class="category">
+            <h2 class="category-header">🔒 Network Security</h2>
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title">DNS in Detail</div>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="room-description">Learn how DNS works and how it helps you access internet services.</div>
+                    <span class="room-type">Free</span>
+                    <a href="writeups/dns-in-detail.html" class="write-up-link">Write-up ➔</a>
+                    <div class="status-pill pending">Write-up Pending</div>
+                </div>
 
-        <!-- Certifications & Badges -->
-        <div class="certifications">
-            <div class="cert-badge">
-                <div>🏆</div>
-                <div>Jr Penetration Tester</div>
-                <div>TryHackMe Path</div>
-            </div>
-            <div class="cert-badge">
-                <div>🎯</div>
-                <div>Complete Beginner</div>
-                <div>TryHackMe Path</div>
-            </div>
-            <div class="cert-badge">
-                <div>⚔️</div>
-                <div>Offensive Security</div>
-                <div>TryHackMe Path</div>
+                <!-- Add more network security rooms -->
             </div>
         </div>
     </div>
