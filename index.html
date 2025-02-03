@@ -1,263 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+    
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TryHackMe Room Achievements</title>
-    <style>
-        :root {
-            --primary: #00ff00;
-            --bg-dark: #0a0a0a;
-            --text-light: #ffffff;
-            --card-bg: rgba(0, 255, 0, 0.05);
-            --border-color: rgba(0, 255, 0, 0.2);
-        }
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="description" content="leonardo tamiano's personal site" />
+        <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="../css/main.css" />
+        
+        
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
+        
+          <link rel="alternate" type="application/atom+xml" title="feed" href='../atom.html'>
+        
+        <title>
+            
+                whoami
+            
+        </title>
+    </head>
 
-        body {
-            background: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .category {
-            margin-bottom: 3rem;
-        }
-
-        .category-header {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .rooms-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .room-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .room-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .room-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .room-title {
-            color: var(--primary);
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        .difficulty {
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .easy { background: #28a745; }
-        .medium { background: #ffc107; color: #000; }
-        .hard { background: #dc3545; }
-        .info { background: #17a2b8; }
-
-        .room-description {
-            margin: 1rem 0;
-            font-size: 0.9rem;
-            color: #ccc;
-        }
-
-        .room-type {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .write-up-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .write-up-link:hover {
-            text-decoration: underline;
-        }
-
-        .status-pill {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
-        }
-
-        .pending {
-            background: #ffc107;
-            color: #000;
-        }
-
-        .completed {
-            background: #28a745;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Fundamentals Category -->
-        <div class="category">
-            <h2 class="category-header">🎓 Fundamentals & Career Path</h2>
-            <div class="rooms-grid">
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">Pentesting Fundamentals</div>
-                        <span class="difficulty easy">Easy</span>
-                    </div>
-                    <div class="room-description">Learn the important ethics and methodologies behind every pentest.</div>
-                    <span class="room-type">Free</span>
-                    <a href="writeups/pentesting-fundamentals.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">Red Team Engagements</div>
-                        <span class="difficulty easy">Easy</span>
-                    </div>
-                    <div class="room-description">Learn the steps and procedures of a red team engagement.</div>
-                    <span class="room-type">Free</span>
-                    <a href="writeups/red-team-engagements.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">Careers in Cyber</div>
-                        <span class="difficulty info">Info</span>
-                    </div>
-                    <div class="room-description">Learn about the different careers in cyber security.</div>
-                    <span class="room-type">Free</span>
-                    <a href="writeups/careers-in-cyber.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-            </div>
+    <body>
+        <div class="dark-mode-container">
+            <input id="darkSwitch" type="checkbox" />
+            <label class="dark-mode-btn" for="darkSwitch"><img src="../img/lisp-logo.png" width=35px/> </label>
         </div>
+        <main class="main-content max-width-3 mx-auto">
+            <div>
+                
+    <h1>
+      <a href="../index.html"> ../ </a> whoami
+    </h1>
+    <div class="line" aria-hidden="true"></div>
+    <div class="page-content">
+        <p>Hello, stranger on the internet.</p>
+<p>Currently, I work as a <strong>software security consultant</strong>, and my work
+activities range between the <strong>penetration testing</strong> of <strong>web and mobile applications</strong>, <strong>secure code reviews</strong> and <strong>training activities</strong>.</p>
+<p>It's hard to describe exactly what you will find in here. What I can
+say is that in here I will share fragments of my life, such as
+technical posts or more personal writings, which I think are worth
+sharing. I do this as a way to explore ideas that interest me and also
+with the intention of sharing something that can be useful for other
+people as well.</p>
+<hr />
+<p>I'm deeply interesting in our <strong>ability to learn</strong> and even more in
+our <strong>ability to teach</strong>. A few years ago I decided that I would
+master the <strong>art of teaching</strong>, and in order to improve my ability as
+a teacher I started to create content online. First I did that in
+italian, my mother tongue, with the project <strong>esadecimale</strong>, and
+recently I've also started doing it in english with the project
+<strong>hexdump</strong>. The subjects I teach are all related to <strong>Computer
+Science</strong>, <strong>Programming</strong> and <strong>Cybersecurity</strong>. Below you can find
+my youtube channels where I regularly post new educational content:</p>
+<ul>
+<li>
+<p><a href="https://www.youtube.com/channel/UCqZe2cxQNCvgkQxUuqsIaig">Esadecimale (🇮🇹)</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/channel/UCzPk3Dj63B6PIEifvVvDfBg">Hexdump (🌍)</a></p>
+</li>
+</ul>
+<p>I'm also deeply interested in other fields such as <strong>psychology</strong> and
+<strong>philosophy</strong>. Having been through deep challenges in understanding
+myself, other people, and the world in general while growing up, I
+have developed a deep need for understanding.</p>
+<center style="margin:20px; margin-top:30px; margin-bottom:30px;"><b> I strive to understand the world I was born into </b></center>
+<p>I believe <strong>sharing knowledge is one of the most beautiful activity</strong>. The
+beauty of learning is multifaceted: not only it improves your own
+life, it can potentially improve also the lives of those around you.</p>
+<center style="margin:20px; margin-top:30px; margin-bottom:30px;"><b> A good life is about truth, and truth requires knowledge and wisdom </b></center>
+<hr />
+<p>I hope you find something useful and interesting in my work.</p>
+<p>Good luck!</p>
 
-        <!-- Security Tools Category -->
-        <div class="category">
-            <h2 class="category-header">🛠️ Security Tools & Applications</h2>
-            <div class="rooms-grid">
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">Burp Suite: The Basics</div>
-                        <span class="difficulty info">Info</span>
-                    </div>
-                    <div class="room-description">An introduction to using Burp Suite for web application pentesting.</div>
-                    <span class="room-type">Premium</span>
-                    <a href="writeups/burp-suite-basics.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">Nmap Live Host Discovery</div>
-                        <span class="difficulty medium">Medium</span>
-                    </div>
-                    <div class="room-description">Learn how to use Nmap to discover live hosts using ARP scan, ICMP scan, and TCP/UDP ping scan.</div>
-                    <span class="room-type">Free</span>
-                    <a href="writeups/nmap-live-host.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">Hydra</div>
-                        <span class="difficulty easy">Easy</span>
-                    </div>
-                    <div class="room-description">Learn about and use Hydra, a fast network logon cracker, to bruteforce and obtain credentials.</div>
-                    <span class="room-type">Free</span>
-                    <a href="writeups/hydra.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Web Security Category -->
-        <div class="category">
-            <h2 class="category-header">🌐 Web Security</h2>
-            <div class="rooms-grid">
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">IDOR</div>
-                        <span class="difficulty easy">Easy</span>
-                    </div>
-                    <div class="room-description">Learn how to find and exploit IDOR vulnerabilities in web applications.</div>
-                    <span class="room-type">Premium</span>
-                    <a href="writeups/idor.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">SQL Injection</div>
-                        <span class="difficulty medium">Medium</span>
-                    </div>
-                    <div class="room-description">Learn how to detect and exploit SQL Injection vulnerabilities.</div>
-                    <span class="room-type">Free</span>
-                    <a href="writeups/sql-injection.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-
-                <!-- Add more web security rooms -->
-            </div>
-        </div>
-
-        <!-- Network Security Category -->
-        <div class="category">
-            <h2 class="category-header">🔒 Network Security</h2>
-            <div class="rooms-grid">
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title">DNS in Detail</div>
-                        <span class="difficulty easy">Easy</span>
-                    </div>
-                    <div class="room-description">Learn how DNS works and how it helps you access internet services.</div>
-                    <span class="room-type">Free</span>
-                    <a href="writeups/dns-in-detail.html" class="write-up-link">Write-up ➔</a>
-                    <div class="status-pill pending">Write-up Pending</div>
-                </div>
-
-                <!-- Add more network security rooms -->
-            </div>
-        </div>
     </div>
-</body>
+
+            </div>
+        </main>
+        
+        
+	
+        <script src="../js/dark-mode-switch.min.js"></script>
+
+	<!-- For MathJax support -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	      tex2jax: {
+		  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		  processEscapes: true
+	      }
+	  });
+	</script>
+	
+	<script type="text/javascript"
+		src="../js/MathJaxdda6.js?config=TeX-AMS-MML_HTMLorMML" >
+	</script>
+
+
+	<script defer data-domain="blog.leonardotamiano.xyz" src="../../analytics.esadecimale.it/js/script.js"></script>
+	
+    </body>
+
+
 </html>
